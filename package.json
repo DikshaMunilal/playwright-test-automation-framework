@@ -1,0 +1,34 @@
+{
+  "name": "playwright-test-automation-framework",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Create a Playwright JS framework for UI/API automation. Test SauceDemo authentication, inventory, cart and checkout, plus Restful-Booker authentication and CRUD, including DELETE and response validation. Include test data, reporting, README setup/execution instructions, evidence, and optionally GitHub Actions CI/CD and Monocart reporting.",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:api": "playwright test --project=api",
+    "test:ui": "playwright test --project=ui",
+    "test:headed": "playwright test --project=ui --headed",
+    "report": "playwright show-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DikshaMunilal/playwright-test-automation-framework.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DikshaMunilal/playwright-test-automation-framework/issues"
+  },
+  "homepage": "https://github.com/DikshaMunilal/playwright-test-automation-framework#readme",
+  "devDependencies": {
+    "@faker-js/faker": "^10.6.0",
+    "@playwright/test": "^1.62.1",
+    "ajv": "^8.20.0",
+    "monocart-reporter": "^2.12.5"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
+}
