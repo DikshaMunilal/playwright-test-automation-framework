@@ -20,4 +20,17 @@ test.describe('authentication', () => {
     await loginPage.login(users.standard.username, 'wrong_password');
     await expect(loginPage.errorMessage).toBeVisible();
   });
+
+  test('logout ends session', async ({ loginPage, inventoryPage, page }) =>{
+    await loginPage.goto();
+    await loginPage.login(users.standard.username, PASSWORD);
+    await inventoryPage.logout();
+
+    await expect(loginPage.loginButton).toBeVisible();
+
+    await test.step('session is actually ended, not just navigated away', async() => {
+      await page.goto('/inventory.html');
+      await expect(loginPage.errorMessage).toContainText(/can only access/i);  
+    });
+  });
 });

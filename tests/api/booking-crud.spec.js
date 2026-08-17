@@ -80,4 +80,12 @@ test.describe('booking CRUD', () => {
     const res = await request.delete(`/booking/${bookingid}`); // no auth cookie
     expect(res.status()).toBe(403);
   });
+
+  test('rejects a booking missing required fields', async ({ bookingClient }) => {
+    const invalid = makeBooking();
+    delete invalid.firstname;
+    
+    const res = await bookingClient.createBooking(invalid);
+    expect(res.status()).toBe(500);
+  })
 });

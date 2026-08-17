@@ -10,6 +10,7 @@ export class CheckoutPage {
     this.errorMessage = page.getByTestId('error');
     this.confirmationMessage = page.getByTestId('complete-header');
     this.summaryTotal = page.getByTestId('total-label');
+    this.itemTotal = page.getByTestId('subtotal-label');
   }
 
   async fillInfo({ firstName, lastName, postalCode }) {

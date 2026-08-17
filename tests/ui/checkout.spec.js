@@ -1,6 +1,7 @@
 import { test, expect } from '../../src/fixtures/ui.fixtures.js';
 import { users, PASSWORD } from '../../src/data/users.js';
 import { makeCustomer } from '../../src/data/customer.factory.js';
+import { checkDataType } from 'ajv/dist/compile/validate/dataType.js';
 
 test.beforeEach(async ({ loginPage }) => {
   await loginPage.goto();
@@ -45,5 +46,18 @@ test.describe('checkout', () => {
     await checkoutPage.fillInfo(makeCustomer());
     await checkoutPage.cancelButton.click();
     await expect(page).toHaveURL(/inventory\.html/);
+  });
+
+  test('overview item total matches the product price', async ({inventoryPage, cartPage, checkoutPage}) => {
+    await inventoryPage.sortBy('az');
+    const [firstName] = await inventoryPage.itemNames();
+    const [firstPrice] = await inventoryPage.itemPrices();
+    
+    await inventoryPage.addItem(firstName);
+    await inventoryPage.openCart();
+    await cartPage.checkout();
+    await checkoutPage.fillInfo(makeCustomer());
+
+    await expect(checkoutPage.itemTotal).toContainText(`$${firstPrice}`);
   });
 });

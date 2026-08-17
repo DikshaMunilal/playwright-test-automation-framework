@@ -30,4 +30,27 @@ test.describe('inventory', () => {
     await inventoryPage.removeItem('Sauce Labs Backpack');
     await expect(inventoryPage.cartBadge).toBeHidden();
   });
+
+  test('cart badge tracks count across multiple adds and removes', async ({ inventoryPage}) => {
+    const items = ['Sauce Labs Backpack', 'Sauce Labs Bike Light', 'Sauce Labs Bolt T-Shirt'];
+
+    await test.step('badge increments with each add', async() => {
+        for (const [index, item] of items.entries()) {
+            await inventoryPage.addItem(item);
+            await expect(inventoryPage.cartBadge).toHaveText(String(index + 1));
+        }   
+    });
+
+    await test.step('badge decrements with each remove', async () => {
+        for (const [index, item] of items.entries()) {
+            await inventoryPage.removeItem(item);
+            const remaining = items.length - index - 1;
+            if (remaining > 0) {
+                await expect(inventoryPage.cartBadge).toHaveText(String(remaining));
+            } else {
+                await expect(inventoryPage.cartBadge).toBeHidden();
+            }
+        }
+    });
+  });
 });
